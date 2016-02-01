@@ -23,6 +23,7 @@ APF_BAN=1
 KILL=1
 EMAIL_TO="root"
 BAN_PERIOD=600
+BANNED_IP_LIST=    # ..will be temporary file
 
 #=======================================================================
 
@@ -138,6 +139,7 @@ done
 TMP_PREFIX='/tmp/ddos'
 TMP_FILE="mktemp $TMP_PREFIX.XXXXXXXX"
 BANNED_IP_MAIL=`$TMP_FILE`
+test -z "$BANNED_IP_LIST" &&
 BANNED_IP_LIST=`$TMP_FILE`
 echo "Banned the following ip addresses on `date`" > $BANNED_IP_MAIL
 echo >>	$BANNED_IP_MAIL
