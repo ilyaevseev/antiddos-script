@@ -7,6 +7,25 @@
 # The LICENSE file is located in the same directory as this program. Please  #
 #  read the LICENSE file before you make copies or distribute this program   #
 ##############################################################################
+
+#
+#  Assign default values, can be overridden by configuration file..
+#
+PROGDIR="/usr/local/ddos"
+PROG="/usr/local/ddos/ddos.sh"
+IGNORE_IP_LIST="/usr/local/ddos/ignore.ip.list"
+CRON="/etc/cron.d/ddos.cron"
+APF="/etc/apf/apf"
+IPT="/sbin/iptables"
+FREQ=1
+NO_OF_CONNECTIONS=150
+APF_BAN=1
+KILL=1
+EMAIL_TO="root"
+BAN_PERIOD=600
+
+#=======================================================================
+
 load_conf()
 {
 	CONF="/usr/local/ddos/ddos.conf"
