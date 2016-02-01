@@ -63,11 +63,20 @@ unbanip()
 	. $UNBAN_SCRIPT &
 }
 
+CRON_PROGRAM=
+restart_cron()
+{
+	test "$CRON_PROGRAM" = "" && service cron  status >/dev/null 2>&1 && CRON_PROGRAM="cron"
+	test "$CRON_PROGRAM" = "" && service crond status >/dev/null 2>&1 && CRON_PROGRAM="crond"
+	test "$CRON_PROGRAM" = "" && echo "Cannot detect cron program, you should restart it manually." && return
+	service $CRON_PROGRAM restart
+}
+
 add_to_cron()
 {
 	rm -f $CRON
 	sleep 1
-	service crond restart
+	restart_cron
 	sleep 1
 	echo "SHELL=/bin/sh" > $CRON
 	if [ $FREQ -le 2 ]; then
@@ -78,7 +87,7 @@ add_to_cron()
 		let "END_MINUTE = 60 - $FREQ + $START_MINUTE"
 		echo "$START_MINUTE-$END_MINUTE/$FREQ * * * * root /usr/local/ddos/ddos.sh >/dev/null 2>&1" >> $CRON
 	fi
-	service crond restart
+	restart_cron
 }
 
 
